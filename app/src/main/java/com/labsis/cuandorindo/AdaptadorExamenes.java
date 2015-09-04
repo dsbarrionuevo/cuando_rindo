@@ -13,8 +13,13 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
 
     ArrayList<Examen> items = new ArrayList<>();
 
-    public void setExamenes(ArrayList examenes){
+    public void setExamenes(ArrayList items) {
+        this.items = items;
+    }
 
+    public void agregar(Examen examen) {
+        items.add(0, examen);
+        notifyItemInserted(0);
     }
 
     @Override
@@ -23,7 +28,7 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
         return new ExamenViewHolder(view);
     }
 
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("DD/mm/yyyy");
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     public void onBindViewHolder(ExamenViewHolder holder, int position) {
@@ -44,6 +49,7 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
         TextView lblDescripcion;
         TextView lblPrioridad;
         TextView lblFecha;
+
         public ExamenViewHolder(View itemView) {
             super(itemView);
             lblTitulo = (TextView) itemView.findViewById(R.id.lblTitulo);

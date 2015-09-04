@@ -15,7 +15,9 @@ public class Examen {
     private Materia materia;
     private Tipo tipo;
 
-    public String getTitulo(){return materia.getNombre()+" " + tipo.getNombre();};
+    public String getTitulo() {
+        return tipo.getNombre() + ": " + materia.getNombre();
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -47,6 +49,22 @@ public class Examen {
 
     public void setFechaRecordatorio(Date fechaRecordatorio) {
         this.fechaRecordatorio = fechaRecordatorio;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
     }
 
     public Date getFechaExamen() {
