@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <LinearLayout
+        android:paddingLeft="16dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/contenedorPrioridad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lblTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo" />
+
+        <TextView
+            android:id="@+id/lblDescripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripcion" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingRight="16dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/contenedorPrioridad"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lblPrioridad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prioridad" />
+
+        <TextView
+            android:id="@+id/lblFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10/10/2015" />
+
+    </LinearLayout>
+
+</RelativeLayout>
