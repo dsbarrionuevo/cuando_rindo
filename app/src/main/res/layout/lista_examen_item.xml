@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_margin="8dp"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:paddingLeft="16dp"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/contenedorPrioridad"
+    <RelativeLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/lblTitulo"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/contenedorPrioridad"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lblTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titulo" />
+
+            <TextView
+                android:id="@+id/lblDescripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripcion" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contenedorPrioridad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Titulo" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="right"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/lblDescripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Descripcion" />
+            <TextView
+                android:id="@+id/lblPrioridad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prioridad" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/lblFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10/10/2015" />
 
-    <LinearLayout
-        android:paddingRight="16dp"
-        android:layout_centerVertical="true"
-        android:id="@+id/contenedorPrioridad"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="vertical">
+        </LinearLayout>
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/lblPrioridad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prioridad" />
-
-        <TextView
-            android:id="@+id/lblFecha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10/10/2015" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>
