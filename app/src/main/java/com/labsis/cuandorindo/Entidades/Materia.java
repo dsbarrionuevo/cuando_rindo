@@ -1,4 +1,4 @@
-package com.labsis.cuandorindo;
+package com.labsis.cuandorindo.Entidades;
 
 /**
  * Created by Facu on 04/09/2015.

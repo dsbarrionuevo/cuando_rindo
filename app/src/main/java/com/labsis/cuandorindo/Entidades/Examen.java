@@ -1,4 +1,4 @@
-package com.labsis.cuandorindo;
+package com.labsis.cuandorindo.Entidades;
 
 import java.util.Date;
 
