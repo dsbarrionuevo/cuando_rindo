@@ -1,9 +1,12 @@
 package com.labsis.cuandorindo;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +38,8 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
         Examen examen = items.get(position);
         holder.lblTitulo.setText(examen.getTitulo());
         holder.lblDescripcion.setText(examen.getDescripcion());
-        holder.lblPrioridad.setText("Prioridad: " + examen.getPrioridad());
+        Log.i("", "prioridad: " + examen.getPrioridad());
+        holder.ratingBarPrioridad.setRating(examen.getPrioridad());
         holder.lblFecha.setText(formatoFecha.format(examen.getFechaExamen()));
     }
 
@@ -47,14 +51,14 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     public class ExamenViewHolder extends RecyclerView.ViewHolder {
         TextView lblTitulo;
         TextView lblDescripcion;
-        TextView lblPrioridad;
+        RatingBar ratingBarPrioridad;
         TextView lblFecha;
 
         public ExamenViewHolder(View itemView) {
             super(itemView);
             lblTitulo = (TextView) itemView.findViewById(R.id.lblTitulo);
             lblDescripcion = (TextView) itemView.findViewById(R.id.lblDescripcion);
-            lblPrioridad = (TextView) itemView.findViewById(R.id.lblPrioridad);
+            ratingBarPrioridad = (RatingBar) itemView.findViewById(R.id.ratingBarPrioridad);
             lblFecha = (TextView) itemView.findViewById(R.id.lblFecha);
         }
     }

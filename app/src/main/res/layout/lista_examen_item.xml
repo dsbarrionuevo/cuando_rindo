@@ -39,11 +39,17 @@
             android:gravity="right"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lblPrioridad"
+            <RatingBar
+                android:padding="0dp"
+                android:layout_margin="0dp"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:rating="4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prioridad" />
+                style="?android:attr/ratingBarStyleSmall"
+                android:id="@+id/ratingBarPrioridad" />
+
 
             <TextView
                 android:id="@+id/lblFecha"
