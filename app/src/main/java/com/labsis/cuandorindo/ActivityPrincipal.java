@@ -1,6 +1,8 @@
 package com.labsis.cuandorindo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.labsis.cuandorindo.DAO.ExamenDAO;
 import com.labsis.cuandorindo.DAO.MateriaDAO;
@@ -26,11 +29,14 @@ public class ActivityPrincipal extends AppCompatActivity {
     Preferencias preferencias;
     private String preferencias_nombre = "preferencias";
     private String preferencias_primerUso = "primerUso";
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
+
 
         preferencias = new Preferencias(this, preferencias_nombre);
         if(preferencias.recuperar(preferencias_primerUso, true)){
@@ -78,7 +84,6 @@ public class ActivityPrincipal extends AppCompatActivity {
             ExamenDAO.getInstance(this).insertar(examen);
         }
 
-        MateriaDAO.getInstance(this).leerTodo();
 
         RecyclerView lstExamenes = (RecyclerView) findViewById(R.id.lstExamenes);
         lstExamenes.setItemAnimator(new DefaultItemAnimator());
@@ -87,5 +92,17 @@ public class ActivityPrincipal extends AppCompatActivity {
         AdaptadorExamenes adaptadorExamenes = new AdaptadorExamenes();
         adaptadorExamenes.setExamenes(ExamenDAO.getInstance(this).leerTodo());
         lstExamenes.setAdapter(adaptadorExamenes);
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivityPrincipal.this, ActivityExamen.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
