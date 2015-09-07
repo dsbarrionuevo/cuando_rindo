@@ -39,8 +39,8 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
         Examen examen = items.get(position);
         holder.lblTitulo.setText(examen.getTitulo());
         holder.lblDescripcion.setText(examen.getDescripcion());
-        Log.i("", "prioridad: " + examen.getPrioridad());
         holder.ratingBarPrioridad.setRating(examen.getPrioridad());
+        Log.i("", "" + examen.getPrioridad());
         holder.lblFecha.setText(formatoFecha.format(examen.getFechaExamen()));
     }
 

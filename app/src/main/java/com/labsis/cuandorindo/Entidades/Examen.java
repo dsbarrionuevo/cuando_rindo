@@ -7,13 +7,23 @@ import java.util.Date;
  */
 public class Examen {
 
+    private int id;
     private String descripcion;
-    private int prioridad, id;
+    private int prioridad;
     private float nota;
-    private Date fechaRecordatorio, fechaExamen;
+    private Date fechaRecordatorio;
+    private Date fechaExamen;
 
     private Materia materia;
-    private Tipo tipo;
+    private TipoExamen tipo;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitulo() {
         return tipo.getNombre() + ": " + materia.getNombre();
@@ -59,11 +69,11 @@ public class Examen {
         this.materia = materia;
     }
 
-    public Tipo getTipo() {
+    public TipoExamen getTipoExamen() {
         return tipo;
     }
 
-    public void setTipo(Tipo tipo) {
+    public void setTipoExamen(TipoExamen tipo) {
         this.tipo = tipo;
     }
 

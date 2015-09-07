@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.labsis.cuandorindo.DAO.ExamenDAO;
+import com.labsis.cuandorindo.DAO.MateriaDAO;
+import com.labsis.cuandorindo.DAO.TipoExamenDAO;
 import com.labsis.cuandorindo.Entidades.Examen;
 import com.labsis.cuandorindo.Entidades.Materia;
-import com.labsis.cuandorindo.Entidades.Tipo;
+import com.labsis.cuandorindo.Entidades.TipoExamen;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,71 +23,69 @@ import java.util.Calendar;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
+    Preferencias preferencias;
+    private String preferencias_nombre = "preferencias";
+    private String preferencias_primerUso = "primerUso";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
+        preferencias = new Preferencias(this, preferencias_nombre);
+        if(preferencias.recuperar(preferencias_primerUso, true)){
+            preferencias.guardar(preferencias_primerUso, false);
+
+            //Materias
+            Materia materiaFisica = new Materia();
+            materiaFisica.setNombre("Física I");
+            MateriaDAO.getInstance(this).insertar(materiaFisica);
+
+            Materia materiaFisica2 = new Materia();
+            materiaFisica2.setNombre("Física II");
+            MateriaDAO.getInstance(this).insertar(materiaFisica2);
+
+            Materia analisis = new Materia();
+            analisis.setNombre("Análisis Matermático I");
+            MateriaDAO.getInstance(this).insertar(analisis);
+
+            Materia analisis2 = new Materia();
+            analisis2.setNombre("Análisis Matermático II");
+            MateriaDAO.getInstance(this).insertar(analisis2);
+
+            //Tipos
+            TipoExamen tipoParcial = new TipoExamen();
+            tipoParcial.setNombre("Parcial");
+            TipoExamenDAO.getInstance(this).insertar(tipoParcial);
+
+            TipoExamen tipoFinal = new TipoExamen();
+            tipoFinal.setNombre("Final");
+            TipoExamenDAO.getInstance(this).insertar(tipoFinal);
+
+            TipoExamen tipoTP = new TipoExamen();
+            tipoTP.setNombre("Trabajo práctico");
+            TipoExamenDAO.getInstance(this).insertar(tipoTP);
+
+            Examen examen = new Examen();
+            examen.setTipoExamen(tipoTP);
+            examen.setMateria(analisis2);
+            examen.setPrioridad(4);
+            examen.setDescripcion("Llalalalala");
+
+            Calendar calendar = Calendar.getInstance();
+            examen.setFechaExamen(calendar.getTime());
+
+            ExamenDAO.getInstance(this).insertar(examen);
+        }
+
+        MateriaDAO.getInstance(this).leerTodo();
 
         RecyclerView lstExamenes = (RecyclerView) findViewById(R.id.lstExamenes);
         lstExamenes.setItemAnimator(new DefaultItemAnimator());
-        lstExamenes.setLayoutManager(new GridLayoutManager(this, 2));
-
-        Materia algoritmos = new Materia();
-        algoritmos.setNombre("Algoritmos y Estrcutura de Datos");
-
-        Materia analisis = new Materia();
-        analisis.setNombre("Analisis Matematico");
-
-        Materia diseño = new Materia();
-        diseño.setNombre("Diseño de Sistemas");
-
-
-        Tipo tipo = new Tipo();
-        tipo.setNombre("Examen");
-
-        //Examen diseño
-        Examen examen = new Examen();
-        examen.setDescripcion("Es la muerte");
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        examen.setFechaExamen(calendar.getTime());
-
-        examen.setPrioridad(5);
-        examen.setTipo(tipo);
-        examen.setMateria(diseño);
-
-        ArrayList<Examen> examens = new ArrayList<>();
-        for (int i = 0; i<100; i++){
-            examens.add(examen);
-        }
+        lstExamenes.setLayoutManager(new LinearLayoutManager(this));
 
         AdaptadorExamenes adaptadorExamenes = new AdaptadorExamenes();
-        adaptadorExamenes.setExamenes(examens);
-
+        adaptadorExamenes.setExamenes(ExamenDAO.getInstance(this).leerTodo());
         lstExamenes.setAdapter(adaptadorExamenes);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
