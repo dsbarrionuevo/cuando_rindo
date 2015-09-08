@@ -2,10 +2,13 @@ package com.labsis.cuandorindo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * Creada por santi_000 on 07/09/2015.
@@ -19,6 +22,7 @@ public class ActivityExamen extends AppCompatActivity {
     RatingBar rtbPrioridad;
     Button btnFechaRecordatorio;
     EditText txtNota;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +35,16 @@ public class ActivityExamen extends AppCompatActivity {
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
         btnFechaRecordatorio = (Button) findViewById(R.id.btnFechaRecordatorio);
         txtNota = (EditText) findViewById(R.id.txtNota);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbarExamen);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 }
