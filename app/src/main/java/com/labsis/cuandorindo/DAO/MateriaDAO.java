@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by fedea on 07/09/2015.
+ Creada por Fede on 07/09/2015
  */
 public class MateriaDAO {
 
@@ -47,6 +47,10 @@ public class MateriaDAO {
         return materia;
     }
 
+    /**
+     * Lee todos las Materia de la DB
+     * @return ArrayList con todos las Materias
+     */
     public ArrayList<Materia> leerTodo(){
         return leerTodo(null, null);
     }
@@ -74,7 +78,11 @@ public class MateriaDAO {
         return materias;
     }
 
-
+    /**
+     * Retorna una Materia
+     * @param id id de la Materia a buscar
+     * @return Materia
+     */
     public Materia leer(int id) {
         Materia materia = items.get(id);
         if(materia!=null){
@@ -97,6 +105,11 @@ public class MateriaDAO {
         return materia;
     }
 
+    /**
+     * Inserta una Materia en la DB
+     * @param materia materia a insertar
+     * @return ID con que se inserto la materia
+     */
     public int insertar(Materia materia) {
         DBHelper db = DBHelper.getInstancia(context);
         ContentValues cv = new ContentValues();

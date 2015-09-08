@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_margin="8dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    app:cardBackgroundColor="@color/green"
+    android:foreground="?selectableItemBackground"
+    android:theme="@style/Theme.AppCompat">
 
     <RelativeLayout
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,45 +21,58 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/lblTitulo"
+                android:id="@+id/lblTipoParcial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Titulo" />
+                android:text="Examen"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <TextView
+                android:id="@+id/lblMateria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analisis Matermatico"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <TextView
                 android:id="@+id/lblDescripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripcion" />
+                android:layout_marginTop="4dp"
+                android:text="Descripcion Descripcion Descripcion Descripcion "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contenedorPrioridad"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:gravity="right"
             android:orientation="vertical">
 
             <RatingBar
-                android:padding="0dp"
-                android:layout_margin="0dp"
-                android:numStars="5"
-                android:stepSize="0.1"
-                android:rating="4"
+                android:id="@+id/ratingBarPrioridad"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:id="@+id/ratingBarPrioridad" />
+                android:layout_margin="0dp"
+                android:numStars="5"
+                android:gravity="center"
+                android:rating="4"
+                android:stepSize="0.1" />
 
 
             <TextView
+                android:layout_marginTop="8dp"
                 android:id="@+id/lblFecha"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10/10/2015" />
+                android:text="10/10/2015 10:00" />
 
         </LinearLayout>
     </RelativeLayout>

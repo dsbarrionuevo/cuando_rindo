@@ -1,7 +1,7 @@
 package com.labsis.cuandorindo.Entidades;
 
 /**
- * Created by Facu on 04/09/2015.
+ * Creada por Facu on 04/09/2015.
  */
 public class Materia {
 

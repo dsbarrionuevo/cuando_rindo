@@ -11,6 +11,9 @@ import com.labsis.cuandorindo.Entidades.TipoExamen;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ Creada por Fede on 07/09/2015
+ */
 public class TipoExamenDAO {
 
     private static TipoExamenDAO instance;
@@ -48,6 +51,10 @@ public class TipoExamenDAO {
         return tipoExamen;
     }
 
+    /**
+     * Lee todos los TipoExamen de la DB
+     * @return ArrayList con todos los TipoExamen
+     */
     public ArrayList<TipoExamen> leerTodo() {
         return leerTodo(null, null);
     }
@@ -76,6 +83,11 @@ public class TipoExamenDAO {
         return tiposExamen;
     }
 
+    /**
+     * Retorna un TipoExamen
+     * @param id id del TipoExamen a buscar
+     * @return un TipoExamen
+     */
     public TipoExamen leer(int id) {
         TipoExamen tipoExamen = items.get(id);
         if (tipoExamen != null) {
@@ -99,6 +111,11 @@ public class TipoExamenDAO {
         return tipoExamen;
     }
 
+    /**
+     * Inserta un TipoExamen en la DB
+     * @param tipoExamen el TipoExamen a insertar
+     * @return ID con que se inserto
+     */
     public int insertar(TipoExamen tipoExamen) {
         DBHelper db = DBHelper.getInstancia(context);
         ContentValues cv = new ContentValues();

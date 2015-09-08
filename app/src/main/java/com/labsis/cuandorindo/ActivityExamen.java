@@ -8,7 +8,7 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 
 /**
- * Created by santi_000 on 07/09/2015.
+ * Creada por santi_000 on 07/09/2015.
  */
 public class ActivityExamen extends AppCompatActivity {
 
@@ -31,7 +31,5 @@ public class ActivityExamen extends AppCompatActivity {
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
         btnFechaRecordatorio = (Button) findViewById(R.id.btnFechaRecordatorio);
         txtNota = (EditText) findViewById(R.id.txtNota);
-
-
     }
 }

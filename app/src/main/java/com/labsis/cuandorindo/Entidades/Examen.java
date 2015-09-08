@@ -3,7 +3,7 @@ package com.labsis.cuandorindo.Entidades;
 import java.util.Date;
 
 /**
- * Created by Facu on 04/09/2015.
+ * Creada por Facu on 04/09/2015.
  */
 public class Examen {
 

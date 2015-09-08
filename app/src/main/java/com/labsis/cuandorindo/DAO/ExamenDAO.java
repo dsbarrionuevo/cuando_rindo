@@ -3,18 +3,16 @@ package com.labsis.cuandorindo.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.labsis.cuandorindo.Entidades.Examen;
 import com.labsis.cuandorindo.Entidades.TipoExamen;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by fedea on 07/09/2015.
+ * Creada por Fede on 07/09/2015
  */
 public class ExamenDAO {
 
@@ -86,6 +84,11 @@ public class ExamenDAO {
         return examen;
     }
 
+    /**
+     * Lee todos los Examenes de la DB
+     *
+     * @return ArrayList con todos los Examenes
+     */
     public ArrayList<Examen> leerTodo() {
         return leerTodo(null, null);
     }
@@ -113,7 +116,12 @@ public class ExamenDAO {
         return examenes;
     }
 
-
+    /**
+     * Retorna un Examen
+     *
+     * @param id id del Examen a buscar
+     * @return Examen encontrado, o null si no lo encuentra
+     */
     public Examen leer(int id) {
         Examen examen = items.get(id);
         if (examen != null) {
@@ -136,6 +144,12 @@ public class ExamenDAO {
         return examen;
     }
 
+    /**
+     * Inserta un Examen en la DB
+     *
+     * @param examen Examen a insertar
+     * @return ID con que se inserto
+     */
     public int insertar(Examen examen) {
         DBHelper db = DBHelper.getInstancia(context);
         ContentValues cv = new ContentValues();
@@ -153,13 +167,16 @@ public class ExamenDAO {
             cv.putNull(col_fechaRecordatorio);
         }
 
-        Log.i("", "id tipo: " + examen.getTipoExamen().getId());
         cv.put(col_idTipoExamen, examen.getTipoExamen().getId());
         cv.put(col_idMateria, examen.getMateria().getId());
         cv.put(col_nota, examen.getNota());
         cv.put(col_prioridad, examen.getPrioridad());
 
         int id = (int) db.getWritableDatabase().insert(tabla, null, cv);
+        if (id != -1) {
+            examen.setId(id);
+            items.put(id, examen);
+        }
         return id;
     }
 }
