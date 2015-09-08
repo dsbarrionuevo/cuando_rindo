@@ -38,7 +38,6 @@ public class ActivityPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
 
         //Cargo las preferencias
-        preferencias = new Preferencias(this, preferencias_nombre);
 
         //Si es primer uso
         if (preferencias.recuperar(preferencias_primerUso, true)) {
