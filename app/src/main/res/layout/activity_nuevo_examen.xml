@@ -13,10 +13,10 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
-            android:text="Nuevo Exámen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:text="Nuevo Exámen"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     </android.support.v7.widget.Toolbar>
@@ -40,6 +40,7 @@
             <Button
                 android:id="@+id/btnMateria"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
@@ -48,6 +49,7 @@
 
             <EditText
                 android:id="@+id/txtDescripcion"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
@@ -57,6 +59,7 @@
 
             <Button
                 android:id="@+id/btnFechaExamen"
+                android:layout_marginTop="8dp"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,25 +69,12 @@
                 android:id="@+id/rtbPrioridad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="0dp"
+                android:layout_marginTop="16dp"
                 android:numStars="5"
                 android:padding="0dp"
+                android:layout_gravity="center_horizontal"
                 android:rating="4"
                 android:stepSize="0.1" />
-
-            <Button
-                android:id="@+id/btnFechaRecordatorio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha Recordatorio" />
-
-
-            <EditText
-                android:id="@+id/txtNota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:hint="Nota" />
 
 
         </LinearLayout>

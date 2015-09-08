@@ -3,6 +3,7 @@ package com.labsis.cuandorindo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +21,6 @@ public class ActivityExamen extends AppCompatActivity {
     EditText txtDescripcion;
     Button btnFechaExamen;
     RatingBar rtbPrioridad;
-    Button btnFechaRecordatorio;
-    EditText txtNota;
     Toolbar toolbar;
 
     @Override
@@ -33,8 +32,6 @@ public class ActivityExamen extends AppCompatActivity {
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
         btnFechaExamen = (Button) findViewById(R.id.btnFechaExamen);
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
-        btnFechaRecordatorio = (Button) findViewById(R.id.btnFechaRecordatorio);
-        txtNota = (EditText) findViewById(R.id.txtNota);
 
         toolbar = (Toolbar) findViewById(R.id.toolbarExamen);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
@@ -42,6 +39,19 @@ public class ActivityExamen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.toolbar_examen);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.toolbarExamen_Recordatorio:
+                        Toast.makeText(ActivityExamen.this, "Click en recordatorio", Toast.LENGTH_LONG).show();
+                        break;
+                }
+                return false;
             }
         });
 
