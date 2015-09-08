@@ -1,6 +1,8 @@
 package com.labsis.cuandorindo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,8 @@ public class ActivityPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
 
         //Cargo las preferencias
+
+        preferencias = new Preferencias(this, preferencias_nombre);
 
         //Si es primer uso
         if (preferencias.recuperar(preferencias_primerUso, true)) {

@@ -9,7 +9,14 @@
         android:layout_height="?actionBarSize"
         android:background="?colorPrimary"
         android:elevation="4dp"
-        android:title="Nuevo Examen">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:text="Nuevo Exámen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     </android.support.v7.widget.Toolbar>
 
