@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blanco_40">#33FFFFFF</color>
-    <color name="negro_40">#33000000</color>
+    <color name="blanco_20">#33FFFFFF</color>
+    <color name="negro_20">#33000000</color>
 
     <color name="grey_500">#9E9E9E</color>
     <color name="grey_800">#424242</color>

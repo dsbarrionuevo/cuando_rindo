@@ -1,5 +1,6 @@
 package com.labsis.cuandorindo;
 
+import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -14,9 +15,12 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.labsis.cuandorindo.DAO.MateriaDAO;
 import com.labsis.cuandorindo.DAO.TipoExamenDAO;
+import com.labsis.cuandorindo.Entidades.Materia;
 import com.labsis.cuandorindo.Entidades.TipoExamen;
 
 import java.util.ArrayList;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 public class ActivityExamen extends AppCompatActivity {
 
     View btnMateria;
+    TextView lblMateria;
     Spinner spnTipo;
     EditText txtDescripcion;
     View btnFechaExamen;
@@ -66,6 +71,15 @@ public class ActivityExamen extends AppCompatActivity {
 
         //
         btnMateria = findViewById(R.id.btnMateria);
+        btnMateria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivityExamen.this, ActivityMateria.class);
+                startActivityForResult(intent, 123);
+            }
+        });
+        lblMateria = (TextView) findViewById(R.id.lblMateriaSeleccionada);
+
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
         btnFechaExamen = findViewById(R.id.btnFechaExamen);
 
@@ -97,7 +111,20 @@ public class ActivityExamen extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode==123){
+            if(resultCode == RESULT_OK){
+                Bundle bundle = data.getExtras();
+
+                int idMateria = bundle.getInt("idMateria");
+                Materia materia = MateriaDAO.getInstance(this).leer(idMateria);
+                lblMateria.setText(materia.getNombre());
+            }
+        }
     }
 }
