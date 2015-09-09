@@ -1,6 +1,5 @@
 package com.labsis.cuandorindo;
 
-import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -8,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -27,10 +26,10 @@ import java.util.ArrayList;
  */
 public class ActivityExamen extends AppCompatActivity {
 
-    Button btnMateria;
+    View btnMateria;
     Spinner spnTipo;
     EditText txtDescripcion;
-    Button btnFechaExamen;
+    View btnFechaExamen;
     RatingBar rtbPrioridad;
     Toolbar toolbar;
 
@@ -38,6 +37,8 @@ public class ActivityExamen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_examen);
+        //Evitar que se muestre el teclado apenas arranca la activity
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         //Spinner Tipo Examen
         spnTipo = (Spinner) findViewById(R.id.spnTipo);
@@ -64,9 +65,9 @@ public class ActivityExamen extends AppCompatActivity {
         });
 
         //
-        btnMateria = (Button) findViewById(R.id.btnMateria);
+        btnMateria = findViewById(R.id.btnMateria);
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
-        btnFechaExamen = (Button) findViewById(R.id.btnFechaExamen);
+        btnFechaExamen = findViewById(R.id.btnFechaExamen);
 
         //RatingBar
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);

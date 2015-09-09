@@ -37,33 +37,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <RelativeLayout
                 android:id="@+id/btnMateria"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:elevation="0dp"
-                android:text="Materia" />
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp">
 
+                <TextView
+                    android:id="@+id/lblMateriaSeleccionada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="Seleccionar materia..."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem" />
+            </RelativeLayout>
 
             <EditText
                 android:id="@+id/txtDescripcion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginTop="8dp"
-                android:gravity="bottom"
-                android:hint="Descripción"
-                android:lines="2" />
+                android:hint="Descripción" />
 
-
-            <Button
+            <RelativeLayout
                 android:id="@+id/btnFechaExamen"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Fecha Examen" />
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/lblFechaSeleccionada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="Seleccionar fecha..."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem" />
+
+            </RelativeLayout>
+
 
             <RatingBar
                 android:id="@+id/rtbPrioridad"

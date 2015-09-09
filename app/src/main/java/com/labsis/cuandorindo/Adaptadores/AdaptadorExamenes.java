@@ -100,10 +100,10 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
             lblFecha = (TextView) itemView.findViewById(R.id.lblFecha);
             viewColor = itemView.findViewById(R.id.color);
 
-            int colorGrisOcuro = activity.getColor(R.color.grey_800);
-            int colorGrisClaro = activity.getColor(R.color.grey_500);
+            int colorGrisOcuro = activity.getResources().getColor(R.color.grey_800);
+            int colorGrisClaro = activity.getResources().getColor(R.color.grey_500);
 
-            //Esto es para cambiar el color de las estrellitas
+//            Esto es para cambiar el color de las estrellitas
             LayerDrawable stars = (LayerDrawable) ratingBarPrioridad.getProgressDrawable();
             DrawableCompat.setTint(stars.getDrawable(2), colorGrisOcuro); //Estrellas Activas
             DrawableCompat.setTint(stars.getDrawable(0), colorGrisClaro); //Estrellas sin seleccionar

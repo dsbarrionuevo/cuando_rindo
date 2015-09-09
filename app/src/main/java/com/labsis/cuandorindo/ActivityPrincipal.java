@@ -1,8 +1,6 @@
 package com.labsis.cuandorindo;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -80,6 +79,18 @@ public class ActivityPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ActivityPrincipal.this, "No implementado", Toast.LENGTH_SHORT).show();
+            }
+        });
+        toolbar.inflateMenu(R.menu.toolbar_principal);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.toolbarPrincipal_Buscar:
+                        Toast.makeText(ActivityPrincipal.this, "Buscar", Toast.LENGTH_LONG).show();
+                        break;
+                }
+                return false;
             }
         });
     }
