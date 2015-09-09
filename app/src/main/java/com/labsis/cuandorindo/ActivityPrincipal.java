@@ -59,7 +59,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         lstExamenes.setLayoutManager(new LinearLayoutManager(this));
 
         //Adaptador
-        adaptadorExamenes = new AdaptadorExamenes();
+        adaptadorExamenes = new AdaptadorExamenes(this);
         adaptadorExamenes.setExamenes(ExamenDAO.getInstance(this).leerTodo());
         lstExamenes.setAdapter(adaptadorExamenes);
 

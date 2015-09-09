@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blanco_40">#33FFFFFF</color>
+    <color name="negro_40">#33000000</color>
+
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_800">#424242</color>
+
     <color name="red">#f44336</color>
     <color name="pink">#e91e63</color>
     <color name="purple">#9c27b0</color>

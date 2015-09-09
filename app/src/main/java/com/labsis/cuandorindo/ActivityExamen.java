@@ -1,6 +1,9 @@
 package com.labsis.cuandorindo;
 
+import android.graphics.Color;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -64,7 +67,13 @@ public class ActivityExamen extends AppCompatActivity {
         btnMateria = (Button) findViewById(R.id.btnMateria);
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
         btnFechaExamen = (Button) findViewById(R.id.btnFechaExamen);
+
+        //RatingBar
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
+        LayerDrawable stars = (LayerDrawable) rtbPrioridad.getProgressDrawable();
+        DrawableCompat.setTint(stars.getDrawable(2), getResources().getColor(R.color.lime)); //Estrellas Activas
+        DrawableCompat.setTint(stars.getDrawable(0), getResources().getColor(R.color.grey_500)); //Estrellas sin seleccionar
+        DrawableCompat.setTint(stars.getDrawable(1), getResources().getColor(R.color.grey_500)); //Fondo estrellas seleccionadas a la mitad
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbarExamen);

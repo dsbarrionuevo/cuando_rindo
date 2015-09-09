@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
 
         <item name="colorPrimary">@color/deep_orange</item>
         <item name="colorPrimaryDark">#E64A19</item>
