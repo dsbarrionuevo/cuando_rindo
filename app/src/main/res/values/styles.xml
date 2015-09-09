@@ -2,10 +2,12 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
-
+        <!-- Colores -->
         <item name="colorPrimary">@color/deep_orange</item>
         <item name="colorPrimaryDark">#E64A19</item>
         <item name="colorAccent">@color/lime</item>
+
+        <!-- Oculto el ActionBar -->
         <item name="windowActionModeOverlay">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
