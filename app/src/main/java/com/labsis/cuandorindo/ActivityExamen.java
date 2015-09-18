@@ -1,5 +1,6 @@
 package com.labsis.cuandorindo;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -23,15 +25,19 @@ import com.labsis.cuandorindo.DAO.TipoExamenDAO;
 import com.labsis.cuandorindo.Entidades.Materia;
 import com.labsis.cuandorindo.Entidades.TipoExamen;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Creada por santi_000 on 07/09/2015.
  */
-public class ActivityExamen extends AppCompatActivity {
+public class ActivityExamen extends AppCompatActivity{
 
     View btnMateria;
     TextView lblMateria;
+    TextView lblFechaExamen;
     Spinner spnTipo;
     EditText txtDescripcion;
     View btnFechaExamen;
@@ -81,7 +87,26 @@ public class ActivityExamen extends AppCompatActivity {
         lblMateria = (TextView) findViewById(R.id.lblMateriaSeleccionada);
 
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
+
+        lblFechaExamen= (TextView) findViewById(R.id.lblFechaSeleccionada);
+
+        final SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
         btnFechaExamen = findViewById(R.id.btnFechaExamen);
+        btnFechaExamen.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                final Calendar c= Calendar.getInstance();
+                final int año= c.get(Calendar.YEAR);
+                final int mes= c.get(Calendar.MONTH);
+                final int dia= c.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(ActivityExamen.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        lblFechaExamen.setText(formatoFecha.format(new Date(year, monthOfYear,dayOfMonth, 9, 0)));
+                    }
+                }, año, mes, dia).show();
+            }
+        });
 
         //RatingBar
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
@@ -120,7 +145,6 @@ public class ActivityExamen extends AppCompatActivity {
         if(requestCode==123){
             if(resultCode == RESULT_OK){
                 Bundle bundle = data.getExtras();
-
                 int idMateria = bundle.getInt("idMateria");
                 Materia materia = MateriaDAO.getInstance(this).leer(idMateria);
                 lblMateria.setText(materia.getNombre());

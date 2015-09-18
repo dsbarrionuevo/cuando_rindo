@@ -47,7 +47,6 @@ public class ActivityMateria extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt("idMateria", materia.getId());
                 intent.putExtras(bundle);
-
                 setResult(RESULT_OK, intent);
                 finish();
             }
