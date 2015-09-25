@@ -27,7 +27,10 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     AppCompatActivity activity;
     public AdaptadorExamenes(AppCompatActivity activity){
         this.activity = activity;
+        setHasStableIds(true);
     }
+
+
     /**
      * Cambio todos los items del adaptador
      *

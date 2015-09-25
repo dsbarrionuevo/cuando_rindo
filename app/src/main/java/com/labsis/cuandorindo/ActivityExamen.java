@@ -202,7 +202,7 @@ public class ActivityExamen extends AppCompatActivity {
         if (requestCode == REQUESTCODE_PICKERMATERIA) {
             if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
-                int idMateria = bundle.getInt("idMateria");
+                int idMateria = bundle.getInt(ActivityMateria.extra_materia);
 
                 Materia materia = MateriaDAO.getInstance(this).leer(idMateria);
                 examen.setMateria(materia);

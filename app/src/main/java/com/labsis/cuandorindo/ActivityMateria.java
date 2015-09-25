@@ -17,7 +17,9 @@ import com.labsis.cuandorindo.Entidades.Materia;
 
 public class ActivityMateria extends AppCompatActivity {
 
-    private static final String extra_isPicker = "isPicker";
+    public static final String extra_isPicker = "isPicker";
+    public static final String extra_materia = "materia";
+
 
     private RecyclerView lstMaterias;
     private AdaptadorMateria adaptadorMaterias;
@@ -61,7 +63,7 @@ public class ActivityMateria extends AppCompatActivity {
                 if(isPicker) {
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("idMateria", materia.getId());
+                    bundle.putInt(extra_materia, materia.getId());
                     intent.putExtras(bundle);
                     setResult(RESULT_OK, intent);
                     finish();

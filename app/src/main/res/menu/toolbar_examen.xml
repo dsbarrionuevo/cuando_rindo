@@ -11,6 +11,7 @@
     <item
         android:id="@+id/toolbarExamen_guardar"
         android:title="Guardar"
+        android:icon="@drawable/ic_done_white"
         app:showAsAction="always" />
 
 </menu>
