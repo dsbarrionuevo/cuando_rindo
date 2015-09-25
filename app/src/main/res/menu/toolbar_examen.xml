@@ -7,4 +7,10 @@
         android:title="Recordatorio"
         android:icon="@drawable/ic_bell_white"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/toolbarExamen_guardar"
+        android:title="Guardar"
+        app:showAsAction="always" />
+
 </menu>

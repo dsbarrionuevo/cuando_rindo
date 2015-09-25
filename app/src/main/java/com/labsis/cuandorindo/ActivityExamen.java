@@ -20,20 +20,22 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.labsis.cuandorindo.DAO.ExamenDAO;
 import com.labsis.cuandorindo.DAO.MateriaDAO;
 import com.labsis.cuandorindo.DAO.TipoExamenDAO;
+import com.labsis.cuandorindo.Entidades.Examen;
 import com.labsis.cuandorindo.Entidades.Materia;
 import com.labsis.cuandorindo.Entidades.TipoExamen;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
- * Creada por santi_000 on 07/09/2015.
+ * Creada por Santi Murua  el 07/09/2015.
  */
-public class ActivityExamen extends AppCompatActivity{
+public class ActivityExamen extends AppCompatActivity {
+
+    public static final int REQUESTCODE_PICKERMATERIA = 123;
 
     View btnMateria;
     TextView lblMateria;
@@ -44,10 +46,14 @@ public class ActivityExamen extends AppCompatActivity{
     RatingBar rtbPrioridad;
     Toolbar toolbar;
 
+    Examen examen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_nuevo_examen);
+
         //Evitar que se muestre el teclado apenas arranca la activity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -66,7 +72,7 @@ public class ActivityExamen extends AppCompatActivity{
         spnTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ActivityExamen.this, "Click en: " + tiposExamen.get(position).getNombre(), Toast.LENGTH_LONG).show();
+                examen.setTipoExamen(tiposExamen.get(position));
             }
 
             @Override
@@ -75,34 +81,54 @@ public class ActivityExamen extends AppCompatActivity{
             }
         });
 
-        //
+        //Materia
         btnMateria = findViewById(R.id.btnMateria);
         btnMateria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityExamen.this, ActivityMateria.class);
-                startActivityForResult(intent, 123);
+                Intent intent = ActivityMateria.getIntentPicker(ActivityExamen.this);
+                startActivityForResult(intent, REQUESTCODE_PICKERMATERIA);
             }
         });
         lblMateria = (TextView) findViewById(R.id.lblMateriaSeleccionada);
 
         txtDescripcion = (EditText) findViewById(R.id.txtDescripcion);
 
-        lblFechaExamen= (TextView) findViewById(R.id.lblFechaSeleccionada);
+        lblFechaExamen = (TextView) findViewById(R.id.lblFechaSeleccionada);
 
-        final SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
+        //Fecha
         btnFechaExamen = findViewById(R.id.btnFechaExamen);
         btnFechaExamen.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view){
-                final Calendar c= Calendar.getInstance();
-                final int año= c.get(Calendar.YEAR);
-                final int mes= c.get(Calendar.MONTH);
-                final int dia= c.get(Calendar.DAY_OF_MONTH);
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+
+                if (examen.getFechaExamen() != null) {
+                    c.setTime(examen.getFechaExamen());
+                }
+
+                int año = c.get(Calendar.YEAR);
+                int mes = c.get(Calendar.MONTH);
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+
+
                 new DatePickerDialog(ActivityExamen.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        lblFechaExamen.setText(formatoFecha.format(new Date(year, monthOfYear,dayOfMonth, 9, 0)));
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, monthOfYear);
+                        calendar.set(Calendar.HOUR_OF_DAY, 9);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+
+                        String fechaString = UtilesFechas.getInstance(ActivityExamen.this).dateTimeFormat(calendar.getTime());
+                        lblFechaExamen.setText(fechaString);
+
+                        examen.setFechaExamen(calendar.getTime());
+
                     }
                 }, año, mes, dia).show();
             }
@@ -132,23 +158,66 @@ public class ActivityExamen extends AppCompatActivity{
                     case R.id.toolbarExamen_Recordatorio:
                         Toast.makeText(ActivityExamen.this, "Click en recordatorio", Toast.LENGTH_LONG).show();
                         break;
+
+                    case R.id.toolbarExamen_guardar:
+
+                        examen.setDescripcion(txtDescripcion.getText().toString());
+                        examen.setPrioridad((int) rtbPrioridad.getRating());
+
+                        int id = ExamenDAO.getInstance(ActivityExamen.this).insertar(examen);
+                        if(id!=-1){
+                            finish();
+                        }
+                        break;
                 }
                 return false;
             }
         });
+
+        //
+        if (savedInstanceState == null) {
+            examen = new Examen();
+        } else {
+            examen = savedInstanceState.getParcelable(state_examen);
+
+            //Recupero la materia seleccionada
+            Materia matera = examen.getMateria();
+            if (matera != null) {
+                lblMateria.setText(matera.getNombre());
+            }
+
+            //Recupero la fecha seleccionada
+            if (examen.getFechaExamen() != null) {
+                String fechaString = UtilesFechas.getInstance(ActivityExamen.this).dateTimeFormat(examen.getFechaExamen());
+                lblFechaExamen.setText(fechaString);
+            }
+
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==123){
-            if(resultCode == RESULT_OK){
+        if (requestCode == REQUESTCODE_PICKERMATERIA) {
+            if (resultCode == RESULT_OK) {
                 Bundle bundle = data.getExtras();
                 int idMateria = bundle.getInt("idMateria");
+
                 Materia materia = MateriaDAO.getInstance(this).leer(idMateria);
+                examen.setMateria(materia);
+
                 lblMateria.setText(materia.getNombre());
             }
         }
+    }
+
+    private static final String state_examen = "examen";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable(state_examen, examen);
     }
 }
