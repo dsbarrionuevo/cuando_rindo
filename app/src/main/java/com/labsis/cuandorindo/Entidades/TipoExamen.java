@@ -6,9 +6,8 @@ import android.os.Parcelable;
 /**
  * Creada por Facu on 04/09/2015.
  */
-public class TipoExamen implements Parcelable {
+public class TipoExamen extends Identificable {
 
-    private int id;
     private int color;
     private String nombre;
 
@@ -32,17 +31,9 @@ public class TipoExamen implements Parcelable {
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     //De aca para abajo, es para que la clase sea Parcelable, es codigo autogereado por http://www.parcelabler.com/
     protected TipoExamen(Parcel in) {
-        id = in.readInt();
+        super(in);
         color = in.readInt();
         nombre = in.readString();
     }
@@ -54,7 +45,7 @@ public class TipoExamen implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        super.writeToParcel(dest, flags);
         dest.writeInt(color);
         dest.writeString(nombre);
     }

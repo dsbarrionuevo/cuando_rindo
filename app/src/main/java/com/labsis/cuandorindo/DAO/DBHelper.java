@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.labsis.cuandorindo.Entidades.Materia;
 import com.labsis.cuandorindo.Entidades.TipoExamen;
+import com.labsis.cuandorindo.MiApp;
 
 /**
     Creada por Fede on 07/09/2015
@@ -16,9 +17,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static DBHelper instancia;
 
-    public static DBHelper getInstancia(Context context) {
+    public static DBHelper getInstancia() {
         if (instancia == null) {
-            instancia = new DBHelper(context, DBNAME, null, 1);
+            instancia = new DBHelper(MiApp.getContext(), DBNAME, null, 1);
         }
 
         return instancia;
@@ -34,9 +35,9 @@ public class DBHelper extends SQLiteOpenHelper {
      * Android maneja de crearla cuando no existe
      */
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(MateriaDAO.getSQLCreate());
-        db.execSQL(TipoExamenDAO.getSQLCreate());
-        db.execSQL(ExamenDAO.getSQLCreate());
+        db.execSQL(MateriaDAO.getInstance().getSQLCreate());
+        db.execSQL(TipoExamenDAO.getInstance().getSQLCreate());
+        db.execSQL(ExamenDAO.getInstance().getSQLCreate());
     }
 
     @Override

@@ -1,38 +1,34 @@
 package com.labsis.cuandorindo.DAO;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 
 import com.labsis.cuandorindo.Entidades.Materia;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
- Creada por Fede on 07/09/2015
+ * Creada por Fede on 07/09/2015
  */
-public class MateriaDAO {
+public class MateriaDAO extends IdentificableDAO<Materia> {
 
-    String tabla = "Materia";
-    String col_id = "id";
     String col_nombre = "nombre";
 
-    private HashMap<Integer, Materia> items = new HashMap<>();
 
     private static MateriaDAO instance;
-    private Context context;
 
-    public static MateriaDAO getInstance(Context context) {
+    public MateriaDAO() {
+        super("Materia");
+    }
+
+    public static MateriaDAO getInstance() {
         if (instance == null) {
             instance = new MateriaDAO();
-            instance.context = context;
         }
 
         return instance;
     }
 
-    public static String getSQLCreate() {
+    @Override
+    public String getSQLCreate() {
         return "CREATE TABLE Materia (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    nombre TEXT    UNIQUE\n" +
@@ -40,87 +36,19 @@ public class MateriaDAO {
                 ");\n";
     }
 
-    private Materia crearObjeto(Cursor cursor) {
+    @Override
+    public ContentValues getContentValue(Materia item) {
+        ContentValues cv = new ContentValues();
+        cv.put(col_nombre, item.getNombre());
+        return cv;
+    }
+
+    @Override
+    protected Materia crearObjeto(Cursor cursor) {
         Materia materia = new Materia();
         materia.setId(cursor.getInt(cursor.getColumnIndex(col_id)));
         materia.setNombre(cursor.getString(cursor.getColumnIndex(col_nombre)));
         return materia;
-    }
-
-    /**
-     * Lee todos las Materia de la DB
-     * @return ArrayList con todos las Materias
-     */
-    public ArrayList<Materia> leerTodo(){
-        return leerTodo(null, null);
-    }
-
-    private ArrayList<Materia> leerTodo(String select, String[] args) {
-        DBHelper db = DBHelper.getInstancia(context);
-
-        ArrayList<Materia> materias = new ArrayList<>();
-
-        String[] col = {col_id};
-
-        Cursor cursor = db.getReadableDatabase().query(tabla, col, select, args, null, null, null);
-        while (cursor.moveToNext()) {
-            int idMateria = cursor.getInt(0);
-            Materia materia = items.get(idMateria);
-            if(materia==null){
-                materia = leer(idMateria);
-                items.put(materia.getId(), materia);
-            }
-            materias.add(materia);
-        }
-
-        cursor.close();
-
-        return materias;
-    }
-
-    /**
-     * Retorna una Materia
-     * @param id id de la Materia a buscar
-     * @return Materia
-     */
-    public Materia leer(int id) {
-        Materia materia = items.get(id);
-        if(materia!=null){
-            return materia;
-        }
-
-        DBHelper db = DBHelper.getInstancia(context);
-
-        String select = col_id + " = ?";
-        String[] args = {"" + id};
-
-        Cursor cursor = db.getReadableDatabase().query(tabla, null, select, args, null, null, null);
-        if (cursor.moveToNext()) {
-            materia = crearObjeto(cursor);
-            items.put(materia.getId(), materia);
-        }
-
-        cursor.close();
-
-        return materia;
-    }
-
-    /**
-     * Inserta una Materia en la DB
-     * @param materia materia a insertar
-     * @return ID con que se inserto la materia
-     */
-    public int insertar(Materia materia) {
-        DBHelper db = DBHelper.getInstancia(context);
-        ContentValues cv = new ContentValues();
-        cv.put("nombre", materia.getNombre());
-
-        int id = (int) db.getWritableDatabase().insert(tabla, null, cv);
-        if(id!=-1){
-            materia.setId(id);
-            items.put(id, materia);
-        }
-        return id;
     }
 
 }

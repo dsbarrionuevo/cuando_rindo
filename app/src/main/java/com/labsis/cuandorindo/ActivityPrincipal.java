@@ -12,15 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.labsis.cuandorindo.Adaptadores.AdaptadorExamenes;
 import com.labsis.cuandorindo.DAO.ExamenDAO;
-import com.labsis.cuandorindo.DAO.MateriaDAO;
-import com.labsis.cuandorindo.DAO.TipoExamenDAO;
 import com.labsis.cuandorindo.Entidades.Examen;
-import com.labsis.cuandorindo.Entidades.Materia;
-import com.labsis.cuandorindo.Entidades.TipoExamen;
-
-import java.util.Calendar;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
@@ -41,11 +36,26 @@ public class ActivityPrincipal extends AppCompatActivity {
 
         //Adaptador
         adaptadorExamenes = new AdaptadorExamenes(this);
-        adaptadorExamenes.setExamenes(ExamenDAO.getInstance(this).leerTodo());
+        adaptadorExamenes.setExamenes(ExamenDAO.getInstance().leerTodo());
+
         adaptadorExamenes.setOnExamenLongClick(new AdaptadorExamenes.OnExamenLongClick() {
             @Override
-            public void onExamenLongClick(Examen examen, int pos) {
-                adaptadorExamenes.quitar(pos);
+            public void onExamenLongClick(final Examen examen, final int pos) {
+                new MaterialDialog.Builder(ActivityPrincipal.this)
+                        .content("¿Desea borrar el examen seleccionado?")
+                        .positiveText("Si")
+                        .negativeText("No")
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                                if (ExamenDAO.getInstance().borrar(examen.getId()) == 1) {
+                                    adaptadorExamenes.quitar(pos);
+                                } else {
+                                    Toast.makeText(ActivityPrincipal.this, "Error al borrar el examen", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }).show();
             }
         });
 

@@ -3,37 +3,42 @@ package com.labsis.cuandorindo.Entidades;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.labsis.cuandorindo.DAO.MateriaDAO;
+import com.labsis.cuandorindo.DAO.TipoExamenDAO;
+
 import java.util.Date;
 
 /**
  * Creada por Facu on 04/09/2015.
  */
-public class Examen implements Parcelable {
+public class Examen extends Identificable {
 
-    private int id;
     private String descripcion;
     private int prioridad;
     private float nota;
     private Date fechaRecordatorio;
     private Date fechaExamen;
 
-    private Materia materia;
-    private TipoExamen tipo;
+    private int idMateria;
+    private int idTipo;
 
-    public Examen(){
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Examen() {
     }
 
     public String getTitulo() {
-        return tipo.getNombre() + ": " + materia.getNombre();
+        if (getTipoExamen() != null && getMateria() != null) {
+            return getTipoExamen().getNombre() + ": " + getMateria().getNombre();
+        }
+
+        if (getMateria() != null) {
+            return getMateria().getNombre();
+        }
+
+        if (getTipoExamen() != null) {
+            return getTipoExamen().getNombre();
+        }
+
+        return "";
     }
 
     public String getDescripcion() {
@@ -68,20 +73,34 @@ public class Examen implements Parcelable {
         this.fechaRecordatorio = fechaRecordatorio;
     }
 
-    public Materia getMateria() {
-        return materia;
+    public int getIdMateria() {
+        return idMateria;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdMateria(int idMateria) {
+        this.idMateria = idMateria;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
+
+    public Materia getMateria() {
+        if (idMateria != 0) {
+            return MateriaDAO.getInstance().leer(idMateria);
+        }
+        return null;
     }
 
     public TipoExamen getTipoExamen() {
-        return tipo;
-    }
-
-    public void setTipoExamen(TipoExamen tipo) {
-        this.tipo = tipo;
+        if (idTipo != 0) {
+            return TipoExamenDAO.getInstance().leer(idTipo);
+        }
+        return null;
     }
 
     public Date getFechaExamen() {
@@ -90,6 +109,7 @@ public class Examen implements Parcelable {
 
     /**
      * Seteo la fecha examen
+     *
      * @param fechaExamen
      */
     public void setFechaExamen(Date fechaExamen) {
@@ -98,7 +118,7 @@ public class Examen implements Parcelable {
 
     //De aca para abajo, es para que la clase sea Parcelable, es codigo autogereado por http://www.parcelabler.com/
     protected Examen(Parcel in) {
-        id = in.readInt();
+        super(in);
         descripcion = in.readString();
         prioridad = in.readInt();
         nota = in.readFloat();
@@ -106,8 +126,9 @@ public class Examen implements Parcelable {
         fechaRecordatorio = tmpFechaRecordatorio != -1 ? new Date(tmpFechaRecordatorio) : null;
         long tmpFechaExamen = in.readLong();
         fechaExamen = tmpFechaExamen != -1 ? new Date(tmpFechaExamen) : null;
-        materia = (Materia) in.readValue(Materia.class.getClassLoader());
-        tipo = (TipoExamen) in.readValue(TipoExamen.class.getClassLoader());
+
+        idMateria = in.readInt();
+        idTipo = in.readInt();
     }
 
     @Override
@@ -117,14 +138,15 @@ public class Examen implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        super.writeToParcel(dest, flags);
+
         dest.writeString(descripcion);
         dest.writeInt(prioridad);
         dest.writeFloat(nota);
         dest.writeLong(fechaRecordatorio != null ? fechaRecordatorio.getTime() : -1L);
         dest.writeLong(fechaExamen != null ? fechaExamen.getTime() : -1L);
-        dest.writeValue(materia);
-        dest.writeValue(tipo);
+        dest.writeInt(idMateria);
+        dest.writeInt(idTipo);
     }
 
     @SuppressWarnings("unused")

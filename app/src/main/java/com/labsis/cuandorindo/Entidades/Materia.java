@@ -6,9 +6,8 @@ import android.os.Parcelable;
 /**
  * Creada por Facu on 04/09/2015.
  */
-public class Materia implements Parcelable {
+public class Materia extends Identificable {
 
-    private int id;
     private String nombre;
 
     public Materia(){
@@ -22,17 +21,9 @@ public class Materia implements Parcelable {
         this.nombre = nombre;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     //De aca para abajo, es para que la clase sea Parcelable, es codigo autogereado por http://www.parcelabler.com/
     protected Materia(Parcel in) {
-        id = in.readInt();
+        super(in);
         nombre = in.readString();
     }
 
@@ -43,7 +34,7 @@ public class Materia implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        super.writeToParcel(dest, flags);
         dest.writeString(nombre);
     }
 

@@ -59,7 +59,7 @@ public class ActivityExamen extends AppCompatActivity {
 
         //Spinner Tipo Examen
         spnTipo = (Spinner) findViewById(R.id.spnTipo);
-        final ArrayList<TipoExamen> tiposExamen = TipoExamenDAO.getInstance(this).leerTodo();
+        final ArrayList<TipoExamen> tiposExamen = TipoExamenDAO.getInstance().leerTodo();
 
         String[] nombresTipoExamen = new String[tiposExamen.size()];
         for (int i = 0; i < tiposExamen.size(); i++) {
@@ -72,7 +72,7 @@ public class ActivityExamen extends AppCompatActivity {
         spnTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                examen.setTipoExamen(tiposExamen.get(position));
+                examen.setIdTipo(tiposExamen.get(position).getId());
             }
 
             @Override
@@ -164,8 +164,8 @@ public class ActivityExamen extends AppCompatActivity {
                         examen.setDescripcion(txtDescripcion.getText().toString());
                         examen.setPrioridad((int) rtbPrioridad.getRating());
 
-                        int id = ExamenDAO.getInstance(ActivityExamen.this).insertar(examen);
-                        if(id!=-1){
+                        int id = ExamenDAO.getInstance().insertar(examen);
+                        if (id != -1) {
                             finish();
                         }
                         break;
@@ -204,9 +204,9 @@ public class ActivityExamen extends AppCompatActivity {
                 Bundle bundle = data.getExtras();
                 int idMateria = bundle.getInt(ActivityMateria.extra_materia);
 
-                Materia materia = MateriaDAO.getInstance(this).leer(idMateria);
-                examen.setMateria(materia);
+                Materia materia = MateriaDAO.getInstance().leer(idMateria);
 
+                examen.setIdMateria(materia.getId());
                 lblMateria.setText(materia.getNombre());
             }
         }

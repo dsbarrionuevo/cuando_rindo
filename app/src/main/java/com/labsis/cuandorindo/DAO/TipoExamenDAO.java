@@ -2,39 +2,34 @@ package com.labsis.cuandorindo.DAO;
 
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.labsis.cuandorindo.Entidades.TipoExamen;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
- Creada por Fede on 07/09/2015
+ * Creada por Fede on 07/09/2015
  */
-public class TipoExamenDAO {
+public class TipoExamenDAO extends IdentificableDAO<TipoExamen> {
 
     private static TipoExamenDAO instance;
-    String tabla = "TipoExamen";
-    String col_id = "id";
+
     String col_nombre = "nombre";
     String col_color = "color";
 
-    private HashMap<Integer, TipoExamen> items = new HashMap<>();
-    private Context context;
+    public TipoExamenDAO(String tabla) {
+        super(tabla);
+    }
 
-    public static TipoExamenDAO getInstance(Context context) {
+    public static TipoExamenDAO getInstance() {
         if (instance == null) {
-            instance = new TipoExamenDAO();
-            instance.context = context;
+            instance = new TipoExamenDAO("TipoExamen");
         }
 
         return instance;
     }
 
-    public static String getSQLCreate() {
+    @Override
+    public String getSQLCreate() {
         return "CREATE TABLE TipoExamen (\n" +
                 "    id     INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    color  INTEGER,\n" +
@@ -43,7 +38,8 @@ public class TipoExamenDAO {
                 ");\n";
     }
 
-    private TipoExamen crearObjeto(Cursor cursor) {
+    @Override
+    protected TipoExamen crearObjeto(Cursor cursor) {
         TipoExamen tipoExamen = new TipoExamen();
         tipoExamen.setId(cursor.getInt(cursor.getColumnIndex(col_id)));
         tipoExamen.setNombre(cursor.getString(cursor.getColumnIndex(col_nombre)));
@@ -51,83 +47,11 @@ public class TipoExamenDAO {
         return tipoExamen;
     }
 
-    /**
-     * Lee todos los TipoExamen de la DB
-     * @return ArrayList con todos los TipoExamen
-     */
-    public ArrayList<TipoExamen> leerTodo() {
-        return leerTodo(null, null);
-    }
-
-    private ArrayList<TipoExamen> leerTodo(String select, String[] args) {
-        DBHelper db = DBHelper.getInstancia(context);
-
-        ArrayList<TipoExamen> tiposExamen = new ArrayList<>();
-
-        String[] col = {col_id};
-
-        Cursor cursor = db.getReadableDatabase().query(tabla, col, select, args, null, null, null);
-        while (cursor.moveToNext()) {
-            int idTipoExamen = cursor.getInt(0);
-
-            TipoExamen tipoExamen = items.get(idTipoExamen);
-            if (tipoExamen == null) {
-                tipoExamen = leer(idTipoExamen);
-                items.put(tipoExamen.getId(), tipoExamen);
-            }
-            tiposExamen.add(tipoExamen);
-        }
-
-        cursor.close();
-
-        return tiposExamen;
-    }
-
-    /**
-     * Retorna un TipoExamen
-     * @param id id del TipoExamen a buscar
-     * @return un TipoExamen
-     */
-    public TipoExamen leer(int id) {
-        TipoExamen tipoExamen = items.get(id);
-        if (tipoExamen != null) {
-            return tipoExamen;
-        }
-
-        DBHelper db = DBHelper.getInstancia(context);
-
-        String select = col_id + " = ?";
-        String[] args = {"" + id};
-
-        Cursor cursor = db.getWritableDatabase().query(tabla, null, select, args, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            tipoExamen = crearObjeto(cursor);
-            items.put(tipoExamen.getId(), tipoExamen);
-        }
-
-        cursor.close();
-
-        return tipoExamen;
-    }
-
-    /**
-     * Inserta un TipoExamen en la DB
-     * @param tipoExamen el TipoExamen a insertar
-     * @return ID con que se inserto
-     */
-    public int insertar(TipoExamen tipoExamen) {
-        DBHelper db = DBHelper.getInstancia(context);
+    @Override
+    public ContentValues getContentValue(TipoExamen item) {
         ContentValues cv = new ContentValues();
-        cv.put(col_nombre, tipoExamen.getNombre());
-        cv.put(col_color, tipoExamen.getColor());
-
-        int id = (int) db.getWritableDatabase().insert(tabla, null, cv);
-        if (id != -1) {
-            tipoExamen.setId(id);
-            items.put(id, tipoExamen);
-        }
-        return id;
+        cv.put(col_color, item.getColor());
+        cv.put(col_nombre, item.getNombre());
+        return cv;
     }
-
 }

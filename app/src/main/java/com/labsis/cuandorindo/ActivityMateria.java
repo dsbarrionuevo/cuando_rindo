@@ -53,7 +53,7 @@ public class ActivityMateria extends AppCompatActivity {
 
         //Adaptador
         adaptadorMaterias = new AdaptadorMateria(this);
-        adaptadorMaterias.setMaterias(MateriaDAO.getInstance(this).leerTodo());
+        adaptadorMaterias.setMaterias(MateriaDAO.getInstance().leerTodo());
         lstMaterias.setAdapter(adaptadorMaterias);
 
         //Click a una materia
