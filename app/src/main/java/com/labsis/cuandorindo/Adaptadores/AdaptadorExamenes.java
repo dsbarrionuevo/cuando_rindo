@@ -1,7 +1,5 @@
 package com.labsis.cuandorindo.Adaptadores;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -25,7 +23,8 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     ArrayList<Examen> items = new ArrayList<>();
 
     AppCompatActivity activity;
-    public AdaptadorExamenes(AppCompatActivity activity){
+
+    public AdaptadorExamenes(AppCompatActivity activity) {
         this.activity = activity;
         setHasStableIds(true);
     }
@@ -49,6 +48,11 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     public void agregar(Examen examen) {
         items.add(0, examen);
         notifyItemInserted(0);
+    }
+
+    public void quitar(int pos) {
+        items.remove(pos);
+        notifyItemRemoved(pos);
     }
 
     @Override
@@ -93,7 +97,7 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
         TextView lblFecha;
         View viewColor;
 
-        public ExamenViewHolder(View itemView) {
+        public ExamenViewHolder(final View itemView) {
             super(itemView);
             cardItem = (CardView) itemView;
             lblTipoExamen = (TextView) itemView.findViewById(R.id.lblTipoParcial);
@@ -119,6 +123,29 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
 
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listenerExamenLongClick != null) {
+                        int pos = getAdapterPosition();
+                        Examen examen = items.get(pos);
+                        listenerExamenLongClick.onExamenLongClick(examen, pos);
+                    }
+                    return false;
+                }
+            });
         }
     }
+
+    private OnExamenLongClick listenerExamenLongClick;
+
+    public interface OnExamenLongClick {
+        public void onExamenLongClick(Examen examen, int pos);
+    }
+
+    public void setOnExamenLongClick(OnExamenLongClick listenerExamenLongClick) {
+        this.listenerExamenLongClick = listenerExamenLongClick;
+    }
+
 }

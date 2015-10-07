@@ -24,10 +24,6 @@ import java.util.Calendar;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
-    private Preferencias preferencias;
-    private String preferencias_nombre = "preferencias";
-    private String preferencias_primerUso = "primerUso";
-
     private FloatingActionButton fab;
     private RecyclerView lstExamenes;
     private AdaptadorExamenes adaptadorExamenes;
@@ -38,20 +34,6 @@ public class ActivityPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        //Cargo las preferencias
-
-        preferencias = new Preferencias(this, preferencias_nombre);
-
-        //Si es primer uso
-        if (preferencias.recuperar(preferencias_primerUso, true)) {
-
-            //Cargo los datos en la DB
-            inicializarDatosEnDB();
-
-            //Marco que ya no es el primer uso
-            preferencias.guardar(preferencias_primerUso, false);
-        }
-
         //Lista
         lstExamenes = (RecyclerView) findViewById(R.id.lstExamenes);
         lstExamenes.setItemAnimator(new DefaultItemAnimator());
@@ -60,6 +42,13 @@ public class ActivityPrincipal extends AppCompatActivity {
         //Adaptador
         adaptadorExamenes = new AdaptadorExamenes(this);
         adaptadorExamenes.setExamenes(ExamenDAO.getInstance(this).leerTodo());
+        adaptadorExamenes.setOnExamenLongClick(new AdaptadorExamenes.OnExamenLongClick() {
+            @Override
+            public void onExamenLongClick(Examen examen, int pos) {
+                adaptadorExamenes.quitar(pos);
+            }
+        });
+
         lstExamenes.setAdapter(adaptadorExamenes);
 
         //FAB
@@ -93,68 +82,5 @@ public class ActivityPrincipal extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    /**
-     * Este metodo solo se debe llamar una vez.
-     * Inserta en la Base de datos las Materias y los TiposExamen con los que la aplicacion arrancaria
-     */
-    private void inicializarDatosEnDB() {
-        //Materias
-        Materia materia_Fisica = new Materia();
-        materia_Fisica.setNombre("Física I");
-        MateriaDAO.getInstance(this).insertar(materia_Fisica);
-
-        Materia materia_Fisica2 = new Materia();
-        materia_Fisica2.setNombre("Física II");
-        MateriaDAO.getInstance(this).insertar(materia_Fisica2);
-
-        Materia materia_AnalisisMatematico = new Materia();
-        materia_AnalisisMatematico.setNombre("Análisis Matemático I");
-        MateriaDAO.getInstance(this).insertar(materia_AnalisisMatematico);
-
-        Materia materia_AnalisisMatematico2 = new Materia();
-        materia_AnalisisMatematico2.setNombre("Análisis Matemático II");
-        MateriaDAO.getInstance(this).insertar(materia_AnalisisMatematico2);
-
-        //Tipos
-        TipoExamen tipo_Parcial = new TipoExamen();
-        tipo_Parcial.setNombre("Parcial");
-        tipo_Parcial.setColor(getResources().getColor(R.color.blue));
-        TipoExamenDAO.getInstance(this).insertar(tipo_Parcial);
-
-        TipoExamen tipo_Final = new TipoExamen();
-        tipo_Final.setNombre("Final");
-        tipo_Final.setColor(getResources().getColor(R.color.red));
-        TipoExamenDAO.getInstance(this).insertar(tipo_Final);
-
-        TipoExamen tipo_TP = new TipoExamen();
-        tipo_TP.setNombre("Trabajo práctico");
-        tipo_TP.setColor(getResources().getColor(R.color.green));
-        TipoExamenDAO.getInstance(this).insertar(tipo_TP);
-
-        //Examenes de prueba
-        Examen examen_Analisis = new Examen();
-        examen_Analisis.setTipoExamen(tipo_TP);
-        examen_Analisis.setMateria(materia_AnalisisMatematico);
-        examen_Analisis.setPrioridad(3);
-        examen_Analisis.setDescripcion("Derivadas parciales, integrales.");
-
-        Calendar calendar = Calendar.getInstance();
-        examen_Analisis.setFechaExamen(calendar.getTime());
-        ExamenDAO.getInstance(this).insertar(examen_Analisis);
-
-        Examen examen_Fisica = new Examen();
-        examen_Fisica.setTipoExamen(tipo_Parcial);
-        examen_Fisica.setMateria(materia_Fisica);
-        examen_Fisica.setPrioridad(4);
-        examen_Fisica.setDescripcion("Movimiento circular, momentum lineal, giróscopos.");
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.add(Calendar.DAY_OF_MONTH, 10);
-        calendar2.add(Calendar.MONTH, 1);
-        examen_Fisica.setFechaExamen(calendar2.getTime());
-
-        ExamenDAO.getInstance(this).insertar(examen_Fisica);
     }
 }
