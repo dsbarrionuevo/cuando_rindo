@@ -3,11 +3,14 @@ package com.labsis.cuandorindo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ public class ActivityPrincipal extends AppCompatActivity {
     private RecyclerView lstExamenes;
     private AdaptadorExamenes adaptadorExamenes;
     private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ActivityPrincipal.this, "No implementado", Toast.LENGTH_SHORT).show();
+                drawerLayout.openDrawer(Gravity.START);
             }
         });
         toolbar.inflateMenu(R.menu.toolbar_principal);
@@ -92,5 +96,27 @@ public class ActivityPrincipal extends AppCompatActivity {
                 return false;
             }
         });
+
+        //Drawer
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_principal:
+
+                        break;
+                    case R.id.drawer_materias:
+                        Intent intent = ActivityMateria.getIntent(ActivityPrincipal.this);
+                        startActivity(intent);
+                        break;
+                }
+
+                drawerLayout.closeDrawers();
+                return false;
+            }
+        });
+
     }
 }

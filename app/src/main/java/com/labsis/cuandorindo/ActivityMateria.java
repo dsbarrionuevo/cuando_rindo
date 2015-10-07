@@ -9,8 +9,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.CharacterPickerDialog;
 import android.view.View;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.labsis.cuandorindo.Adaptadores.AdaptadorMateria;
 import com.labsis.cuandorindo.DAO.MateriaDAO;
 import com.labsis.cuandorindo.Entidades.Materia;
@@ -31,6 +34,14 @@ public class ActivityMateria extends AppCompatActivity {
         Intent intent = new Intent(context, ActivityMateria.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean(extra_isPicker, true);
+        intent.putExtras(bundle);
+        return intent;
+    }
+
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, ActivityMateria.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(extra_isPicker, false);
         intent.putExtras(bundle);
         return intent;
     }
@@ -83,6 +94,31 @@ public class ActivityMateria extends AppCompatActivity {
 
         //FAB
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(ActivityMateria.this)
+                        .autoDismiss(false)
+                        .input("Materia...", "", new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog materialDialog, CharSequence charSequence) {
+                                String cadena = charSequence.toString();
+                                if(cadena.length()==0){
+                                    Toast.makeText(ActivityMateria.this, "Ingrese algo", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                Materia materia = new Materia();
+                                materia.setNombre(cadena);
+                                MateriaDAO.getInstance().insertar(materia);
+
+                                adaptadorMaterias.agregar(materia);
+
+                                materialDialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
         //Si es picker lo oculto
         if (isPicker) {
             floatingActionButton.setVisibility(View.GONE);

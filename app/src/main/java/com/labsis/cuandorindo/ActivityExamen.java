@@ -136,10 +136,10 @@ public class ActivityExamen extends AppCompatActivity {
 
         //RatingBar
         rtbPrioridad = (RatingBar) findViewById(R.id.rtbPrioridad);
-        LayerDrawable stars = (LayerDrawable) rtbPrioridad.getProgressDrawable();
-        DrawableCompat.setTint(stars.getDrawable(2), getResources().getColor(R.color.lime)); //Estrellas Activas
-        DrawableCompat.setTint(stars.getDrawable(0), getResources().getColor(R.color.grey_500)); //Estrellas sin seleccionar
-        DrawableCompat.setTint(stars.getDrawable(1), getResources().getColor(R.color.grey_500)); //Fondo estrellas seleccionadas a la mitad
+        //LayerDrawable stars = (LayerDrawable) rtbPrioridad.getProgressDrawable();
+        //DrawableCompat.setTint(stars.getDrawable(2), getResources().getColor(R.color.lime)); //Estrellas Activas
+        //DrawableCompat.setTint(stars.getDrawable(0), getResources().getColor(R.color.grey_500)); //Estrellas sin seleccionar
+        //DrawableCompat.setTint(stars.getDrawable(1), getResources().getColor(R.color.grey_500)); //Fondo estrellas seleccionadas a la mitad
 
         //Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbarExamen);
