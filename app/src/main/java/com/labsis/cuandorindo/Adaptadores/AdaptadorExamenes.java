@@ -21,6 +21,9 @@ import java.util.ArrayList;
 public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.ExamenViewHolder> {
 
     ArrayList<Examen> items = new ArrayList<>();
+    ArrayList<Examen> todosLosItems = new ArrayList<>();
+
+    String filtro = "";
 
     AppCompatActivity activity;
 
@@ -36,7 +39,14 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
      * @param items nuevos items a mostrar
      */
     public void setExamenes(ArrayList<Examen> items) {
-        this.items = items;
+        this.todosLosItems = items;
+
+        for (Examen examen : items) {
+            if (validar(examen)) {
+                this.items.add(examen);
+            }
+        }
+
         notifyDataSetChanged();
     }
 
@@ -46,13 +56,34 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
      * @param examen Examen a insertar
      */
     public void agregar(Examen examen) {
-        items.add(0, examen);
-        notifyItemInserted(0);
+        todosLosItems.add(0, examen);
+
+        if (validar(examen)) {
+            items.add(0, examen);
+            notifyItemInserted(0);
+        }
     }
 
-    public void quitar(int pos) {
-        items.remove(pos);
-        notifyItemRemoved(pos);
+    public void quitar(Examen examen) {
+        todosLosItems.remove(examen);
+
+        if (items.contains(examen)) {
+            int posicion = items.indexOf(examen);
+            items.remove(posicion);
+            notifyItemRemoved(posicion);
+        }
+    }
+
+    public boolean validar(Examen examen) {
+        if (examen.getMateria().getNombre().contains(filtro)) {
+            return true;
+        }
+
+        if (examen.getDescripcion() != null && examen.getDescripcion().contains(filtro)) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -86,6 +117,11 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void setFIltro(String filtro) {
+        this.filtro = filtro;
+        setExamenes(todosLosItems);
     }
 
     public class ExamenViewHolder extends RecyclerView.ViewHolder {

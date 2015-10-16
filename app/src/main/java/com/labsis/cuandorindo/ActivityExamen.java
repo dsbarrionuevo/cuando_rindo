@@ -211,6 +211,8 @@ public class ActivityExamen extends AppCompatActivity {
         }
     }
 
+    private static final String state_examen = "examen";
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

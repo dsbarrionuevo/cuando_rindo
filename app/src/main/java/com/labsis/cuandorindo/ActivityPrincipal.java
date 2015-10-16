@@ -3,9 +3,6 @@ package com.labsis.cuandorindo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,7 +23,6 @@ public class ActivityPrincipal extends AppCompatActivity {
     private RecyclerView lstExamenes;
     private AdaptadorExamenes adaptadorExamenes;
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +77,7 @@ public class ActivityPrincipal extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                Toast.makeText(ActivityPrincipal.this, "No implementado", Toast.LENGTH_SHORT).show();
             }
         });
         toolbar.inflateMenu(R.menu.toolbar_principal);
@@ -90,7 +86,13 @@ public class ActivityPrincipal extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.toolbarPrincipal_Buscar:
-                        Toast.makeText(ActivityPrincipal.this, "Buscar", Toast.LENGTH_LONG).show();
+                        if (txtBuscar.getVisibility() == View.VISIBLE) {
+                            txtBuscar.setVisibility(View.GONE);
+                            textoTitulo.setVisibility(View.VISIBLE);
+                        } else {
+                            txtBuscar.setVisibility(View.VISIBLE);
+                            textoTitulo.setVisibility(View.GONE);
+                        }
                         break;
                 }
                 return false;
@@ -115,6 +117,28 @@ public class ActivityPrincipal extends AppCompatActivity {
 
                 drawerLayout.closeDrawers();
                 return false;
+            }
+        });
+
+
+        textoTitulo = (TextView) toolbar.findViewById(R.id.textoTitulo);
+        txtBuscar = (EditText) toolbar.findViewById(R.id.txtBusqueda);
+
+        txtBuscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String texto = txtBuscar.getText().toString();
+                adaptadorExamenes.setFIltro(texto);
             }
         });
 
