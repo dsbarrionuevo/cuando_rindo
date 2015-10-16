@@ -36,7 +36,7 @@ import java.util.Calendar;
 public class ActivityExamen extends AppCompatActivity {
 
     public static final int REQUESTCODE_PICKERMATERIA = 123;
-
+    private static final String state_examen = "examen";
     View btnMateria;
     TextView lblMateria;
     TextView lblFechaExamen;
@@ -45,7 +45,6 @@ public class ActivityExamen extends AppCompatActivity {
     View btnFechaExamen;
     RatingBar rtbPrioridad;
     Toolbar toolbar;
-
     Examen examen;
 
     @Override
@@ -211,8 +210,6 @@ public class ActivityExamen extends AppCompatActivity {
             }
         }
     }
-
-    private static final String state_examen = "examen";
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
