@@ -41,6 +41,7 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     public void setExamenes(ArrayList<Examen> items) {
         this.todosLosItems = items;
 
+        this.items.clear();
         for (Examen examen : items) {
             if (validar(examen)) {
                 this.items.add(examen);
@@ -75,11 +76,11 @@ public class AdaptadorExamenes extends RecyclerView.Adapter<AdaptadorExamenes.Ex
     }
 
     public boolean validar(Examen examen) {
-        if (examen.getMateria().getNombre().contains(filtro)) {
+        if (examen.getMateria().getNombre().toLowerCase().contains(filtro.toLowerCase())) {
             return true;
         }
 
-        if (examen.getDescripcion() != null && examen.getDescripcion().contains(filtro)) {
+        if (examen.getDescripcion() != null && examen.getDescripcion().toLowerCase().contains(filtro.toLowerCase())) {
             return true;
         }
 
